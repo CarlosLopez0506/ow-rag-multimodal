@@ -12,6 +12,12 @@ build/
 # Vector cache
 data/cache/
 
+# Runtime data
+data/player_history.json
+
+# Build artifacts
+src/*.egg-info/
+
 # IDE
 .idea/
 .vscode/

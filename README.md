@@ -24,6 +24,8 @@ The engine operates entirely in normalized vector space. There are no keyword ru
    - Retrieved-context centroid — `0.1`
 6. **Rank** all heroes by cosine similarity (dot product on L2-normalized vectors) and return the top-K, optionally filtered by role.
 
+![System diagram](docs/assets/system_diagram.png)
+
 ```
 flowchart TD
     A[UI / CLI] --> B[Query + Played Heroes]
@@ -44,7 +46,7 @@ flowchart TD
 ow-rag-multimodal/
 ├── data/
 │   ├── heroes.json           # Hero catalog with role and description
-│   ├── player_history.json   # Persisted play counts per hero
+│   ├── images/               # Hero portrait PNGs
 │   └── cache/                # .npy vectors + metadata (gitignored)
 ├── src/ow_rag_multimodal/
 │   ├── cli.py                # Argparse CLI entry point
@@ -56,8 +58,14 @@ ow-rag-multimodal/
 │   ├── recommender.py        # OWRAGMultimodalRecommender: full pipeline
 │   └── ui.py                 # Gradio web interface
 ├── docs/
-│   ├── DIAGRAMA_FLUJO_RAG.md
-│   └── PRESENTACION_OW_RAG.md
+│   ├── assets/
+│   │   └── system_diagram.png
+│   ├── notes/                # Working notes and presentation materials
+│   ├── eval_report.tex
+│   ├── results_baseline.txt
+│   └── results_tuning.txt
+├── scripts/
+│   └── download_images.py
 ├── .env.example
 └── pyproject.toml
 ```
