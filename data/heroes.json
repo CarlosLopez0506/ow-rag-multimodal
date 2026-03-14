@@ -1,0 +1,432 @@
+{
+  "dva": {
+    "name": "D.Va",
+    "slug": "dva",
+    "role": "Tank",
+    "overview": "D.Va is a mobile frontline tank who dives targets, peels for allies, and repositions quickly with her mech.",
+    "abilities": "She uses Boosters for engages, Defense Matrix to deny projectiles, Micro Missiles for burst, and Self-Destruct to force space.",
+    "playstyle_tags": "mobile tank dive fast agile mech missiles self-destruct defense matrix",
+    "combined_text": "D.Va is a Tank hero. D.Va is a mobile frontline tank who dives targets, peels for allies, and repositions quickly with her mech. She uses Boosters for engages, Defense Matrix to deny projectiles, Micro Missiles for burst, and Self-Destruct to force space. Playstyle: mobile tank dive fast agile mech missiles self-destruct defense matrix",
+    "image_url": "data/images/dva.png"
+  },
+  "doomfist": {
+    "name": "Doomfist",
+    "slug": "doomfist",
+    "role": "Tank",
+    "overview": "Doomfist is a high-mobility tank that starts fights aggressively and disrupts enemy positioning.",
+    "abilities": "His kit combines Rocket Punch, Seismic Slam, and Power Block to create openings, then Meteor Strike to finish or escape.",
+    "playstyle_tags": "dive melee brawl punch aggressive high mobility seismic slam",
+    "combined_text": "Doomfist is a Tank hero. Doomfist is a high-mobility tank that starts fights aggressively and disrupts enemy positioning. His kit combines Rocket Punch, Seismic Slam, and Power Block to create openings, then Meteor Strike to finish or escape. Playstyle: dive melee brawl punch aggressive high mobility seismic slam",
+    "image_url": "data/images/doomfist.png"
+  },
+  "hazard": {
+    "name": "Hazard",
+    "slug": "hazard",
+    "role": "Tank",
+    "overview": "Hazard is a disruptive tank focused on controlling angles and punishing enemies in tight spaces.",
+    "abilities": "He mixes zone-control tools with short-range pressure to isolate targets and hold contested objectives.",
+    "playstyle_tags": "area control spikes barrier tank leap",
+    "combined_text": "Hazard is a Tank hero. Hazard is a disruptive tank focused on controlling angles and punishing enemies in tight spaces. He mixes zone-control tools with short-range pressure to isolate targets and hold contested objectives. Playstyle: area control spikes barrier tank leap",
+    "image_url": "data/images/hazard.png"
+  },
+  "junker-queen": {
+    "name": "Junker Queen",
+    "slug": "junker-queen",
+    "role": "Tank",
+    "overview": "Junker Queen is a brawl tank who thrives in close-range fights and sustained pressure.",
+    "abilities": "She applies wounds with her knife and abilities, speeds her team with Commanding Shout, and wins attrition with aggressive tempo.",
+    "playstyle_tags": "aggressive melee bleed wound close range shout commanding",
+    "combined_text": "Junker Queen is a Tank hero. Junker Queen is a brawl tank who thrives in close-range fights and sustained pressure. She applies wounds with her knife and abilities, speeds her team with Commanding Shout, and wins attrition with aggressive tempo. Playstyle: aggressive melee bleed wound close range shout commanding",
+    "image_url": "data/images/junker-queen.png"
+  },
+  "mauga": {
+    "name": "Mauga",
+    "slug": "mauga",
+    "role": "Tank",
+    "overview": "Mauga is a brawling tank built for sustained frontline damage and close-range pressure.",
+    "abilities": "He alternates and combines dual chainguns, uses mobility to force fights, and overwhelms teams in extended engagements.",
+    "playstyle_tags": "aggressive dual minigun healblock tank brawl overrun",
+    "combined_text": "Mauga is a Tank hero. Mauga is a brawling tank built for sustained frontline damage and close-range pressure. He alternates and combines dual chainguns, uses mobility to force fights, and overwhelms teams in extended engagements. Playstyle: aggressive dual minigun healblock tank brawl overrun",
+    "image_url": "data/images/mauga.png"
+  },
+  "orisa": {
+    "name": "Orisa",
+    "slug": "orisa",
+    "role": "Tank",
+    "overview": "Orisa is an anchor tank who stabilizes space and resists crowd control in frontline battles.",
+    "abilities": "She pokes at range, uses Fortify for survivability, and controls engages with javelin-based displacement.",
+    "playstyle_tags": "anchor tank fortify javelin spear long range poke pull",
+    "combined_text": "Orisa is a Tank hero. Orisa is an anchor tank who stabilizes space and resists crowd control in frontline battles. She pokes at range, uses Fortify for survivability, and controls engages with javelin-based displacement. Playstyle: anchor tank fortify javelin spear long range poke pull",
+    "image_url": "data/images/orisa.png"
+  },
+  "ramattra": {
+    "name": "Ramattra",
+    "slug": "ramattra",
+    "role": "Tank",
+    "overview": "Ramattra is a flexible tank that switches between poke and brawl styles depending on the fight.",
+    "abilities": "He controls lanes with barrier and ranged pressure, then transforms to Nemesis Form for close-range durability and damage.",
+    "playstyle_tags": "poke brawl block barrier nemesis form punish void",
+    "combined_text": "Ramattra is a Tank hero. Ramattra is a flexible tank that switches between poke and brawl styles depending on the fight. He controls lanes with barrier and ranged pressure, then transforms to Nemesis Form for close-range durability and damage. Playstyle: poke brawl block barrier nemesis form punish void",
+    "image_url": "data/images/ramattra.png"
+  },
+  "reinhardt": {
+    "name": "Reinhardt",
+    "slug": "reinhardt",
+    "role": "Tank",
+    "overview": "Reinhardt is a classic shield tank who leads pushes and protects teammates on the frontline.",
+    "abilities": "He combines Barrier Field, Fire Strike, and Charge to create space, then closes fights with Earthshatter timing.",
+    "playstyle_tags": "frontline shield barrier charge melee protect team hammer",
+    "combined_text": "Reinhardt is a Tank hero. Reinhardt is a classic shield tank who leads pushes and protects teammates on the frontline. He combines Barrier Field, Fire Strike, and Charge to create space, then closes fights with Earthshatter timing. Playstyle: frontline shield barrier charge melee protect team hammer",
+    "image_url": "data/images/reinhardt.png"
+  },
+  "roadhog": {
+    "name": "Roadhog",
+    "slug": "roadhog",
+    "role": "Tank",
+    "overview": "Roadhog is a pick-oriented tank that punishes mistakes with burst damage at close range.",
+    "abilities": "His hook combo isolates targets, while self-heal and displacement tools let him survive and disrupt enemy formations.",
+    "playstyle_tags": "hook self-heal tank close range disrupt pig pen",
+    "combined_text": "Roadhog is a Tank hero. Roadhog is a pick-oriented tank that punishes mistakes with burst damage at close range. His hook combo isolates targets, while self-heal and displacement tools let him survive and disrupt enemy formations. Playstyle: hook self-heal tank close range disrupt pig pen",
+    "image_url": "data/images/roadhog.png"
+  },
+  "sigma": {
+    "name": "Sigma",
+    "slug": "sigma",
+    "role": "Tank",
+    "overview": "Sigma is a ranged control tank who dominates mid-range sightlines and slows enemy advances.",
+    "abilities": "He cycles barrier, Kinetic Grasp, and Accretion to absorb pressure and punish overextensions with precise cooldowns.",
+    "playstyle_tags": "poke shield float accretion hyperspheres kinetic grasp",
+    "combined_text": "Sigma is a Tank hero. Sigma is a ranged control tank who dominates mid-range sightlines and slows enemy advances. He cycles barrier, Kinetic Grasp, and Accretion to absorb pressure and punish overextensions with precise cooldowns. Playstyle: poke shield float accretion hyperspheres kinetic grasp",
+    "image_url": "data/images/sigma.png"
+  },
+  "winston": {
+    "name": "Winston",
+    "slug": "winston",
+    "role": "Tank",
+    "overview": "Winston is a dive tank specialized in jumping isolated targets and splitting teams.",
+    "abilities": "He engages with Jump Pack and Barrier Projector, applies constant cleave damage, and uses Primal Rage for disruption.",
+    "playstyle_tags": "dive leap barrier electrical damage close range jump pack",
+    "combined_text": "Winston is a Tank hero. Winston is a dive tank specialized in jumping isolated targets and splitting teams. He engages with Jump Pack and Barrier Projector, applies constant cleave damage, and uses Primal Rage for disruption. Playstyle: dive leap barrier electrical damage close range jump pack",
+    "image_url": "data/images/winston.png"
+  },
+  "wrecking-ball": {
+    "name": "Wrecking Ball",
+    "slug": "wrecking-ball",
+    "role": "Tank",
+    "overview": "Wrecking Ball is a high-mobility disruption tank that creates chaos and draws attention.",
+    "abilities": "He rolls and grapples through enemy lines, uses slam and mines for area denial, and survives with adaptive shields.",
+    "playstyle_tags": "dive disruption swing roll mine knockback slam",
+    "combined_text": "Wrecking Ball is a Tank hero. Wrecking Ball is a high-mobility disruption tank that creates chaos and draws attention. He rolls and grapples through enemy lines, uses slam and mines for area denial, and survives with adaptive shields. Playstyle: dive disruption swing roll mine knockback slam",
+    "image_url": "data/images/wrecking-ball.png"
+  },
+  "zarya": {
+    "name": "Zarya",
+    "slug": "zarya",
+    "role": "Tank",
+    "overview": "Zarya is a scaling tank that becomes stronger as she converts damage into energy.",
+    "abilities": "Her personal and projected barriers protect key allies, while high-energy beam pressure and Graviton Surge decide fights.",
+    "playstyle_tags": "tank bubble barrier charge energy beam particle cannon",
+    "combined_text": "Zarya is a Tank hero. Zarya is a scaling tank that becomes stronger as she converts damage into energy. Her personal and projected barriers protect key allies, while high-energy beam pressure and Graviton Surge decide fights. Playstyle: tank bubble barrier charge energy beam particle cannon",
+    "image_url": "data/images/zarya.png"
+  },
+  "ashe": {
+    "name": "Ashe",
+    "slug": "ashe",
+    "role": "Damage",
+    "overview": "Ashe is a mid-to-long-range damage hero with strong burst and pick potential.",
+    "abilities": "She controls sightlines with her rifle, pressures teams with Dynamite, repositions with Coach Gun, and deploys B.O.B.",
+    "playstyle_tags": "mid range rifle dynamite coach gun mounted turret BOB",
+    "combined_text": "Ashe is a Damage hero. Ashe is a mid-to-long-range damage hero with strong burst and pick potential. She controls sightlines with her rifle, pressures teams with Dynamite, repositions with Coach Gun, and deploys B.O.B. Playstyle: mid range rifle dynamite coach gun mounted turret BOB",
+    "image_url": "data/images/ashe.png"
+  },
+  "bastion": {
+    "name": "Bastion",
+    "slug": "bastion",
+    "role": "Damage",
+    "overview": "Bastion is a high-damage damage hero built around strong firing windows and positional control.",
+    "abilities": "He rotates between mobile pressure and turret-like burst phases, using grenade utility to secure eliminations.",
+    "playstyle_tags": "turret sentry recon high damage transformation reconfigure",
+    "combined_text": "Bastion is a Damage hero. Bastion is a high-damage damage hero built around strong firing windows and positional control. He rotates between mobile pressure and turret-like burst phases, using grenade utility to secure eliminations. Playstyle: turret sentry recon high damage transformation reconfigure",
+    "image_url": "data/images/bastion.png"
+  },
+  "echo": {
+    "name": "Echo",
+    "slug": "echo",
+    "role": "Damage",
+    "overview": "Echo is an aerial burst damage hero that excels at finishing low-health targets.",
+    "abilities": "She combines Flight, Sticky Bombs, and Focusing Beam for lethal combos, then uses Duplicate to swing key fights.",
+    "playstyle_tags": "aerial flight beam sticky bombs duplicate copy",
+    "combined_text": "Echo is a Damage hero. Echo is an aerial burst damage hero that excels at finishing low-health targets. She combines Flight, Sticky Bombs, and Focusing Beam for lethal combos, then uses Duplicate to swing key fights. Playstyle: aerial flight beam sticky bombs duplicate copy",
+    "image_url": "data/images/echo.png"
+  },
+  "cassidy": {
+    "name": "Cassidy",
+    "slug": "cassidy",
+    "role": "Damage",
+    "overview": "Cassidy is a reliable hitscan damage hero for mid-range duels and target punishment.",
+    "abilities": "He uses precise revolver shots, Combat Roll for tempo, Magnetic Grenade for pressure, and Deadeye for zone threat.",
+    "playstyle_tags": "mid range fan the hammer deadeye magnetic grenade",
+    "combined_text": "Cassidy is a Damage hero. Cassidy is a reliable hitscan damage hero for mid-range duels and target punishment. He uses precise revolver shots, Combat Roll for tempo, Magnetic Grenade for pressure, and Deadeye for zone threat. Playstyle: mid range fan the hammer deadeye magnetic grenade",
+    "image_url": "data/images/cassidy.png"
+  },
+  "freja": {
+    "name": "Freja",
+    "slug": "freja",
+    "role": "Damage",
+    "overview": "Freja is a mobile precision damage hero focused on fast target acquisition and burst windows.",
+    "abilities": "She uses accurate projectile shots and mobility tools to poke, reposition, and finish priority targets.",
+    "playstyle_tags": "crossbow mobile nimble bola shot",
+    "combined_text": "Freja is a Damage hero. Freja is a mobile precision damage hero focused on fast target acquisition and burst windows. She uses accurate projectile shots and mobility tools to poke, reposition, and finish priority targets. Playstyle: crossbow mobile nimble bola shot",
+    "image_url": "data/images/freja.png"
+  },
+  "genji": {
+    "name": "Genji",
+    "slug": "genji",
+    "role": "Damage",
+    "overview": "Genji is a flanking damage hero that excels at mobility and cleanup plays.",
+    "abilities": "He pokes with shuriken, denies fire with Deflect, resets with Swift Strike, and can carry fights with Dragonblade.",
+    "playstyle_tags": "flanker ninja swift strike deflect agile shuriken",
+    "combined_text": "Genji is a Damage hero. Genji is a flanking damage hero that excels at mobility and cleanup plays. He pokes with shuriken, denies fire with Deflect, resets with Swift Strike, and can carry fights with Dragonblade. Playstyle: flanker ninja swift strike deflect agile shuriken",
+    "image_url": "data/images/genji.png"
+  },
+  "hanzo": {
+    "name": "Hanzo",
+    "slug": "hanzo",
+    "role": "Damage",
+    "overview": "Hanzo is a projectile sniper with high burst from range and strong scouting utility.",
+    "abilities": "He controls angles with bow pressure, reveals enemies with Sonic Arrow, and breaks teams with Dragonstrike combos.",
+    "playstyle_tags": "sniper bow arrow storm arrows sonic arrow wall climb",
+    "combined_text": "Hanzo is a Damage hero. Hanzo is a projectile sniper with high burst from range and strong scouting utility. He controls angles with bow pressure, reveals enemies with Sonic Arrow, and breaks teams with Dragonstrike combos. Playstyle: sniper bow arrow storm arrows sonic arrow wall climb",
+    "image_url": "data/images/hanzo.png"
+  },
+  "junkrat": {
+    "name": "Junkrat",
+    "slug": "junkrat",
+    "role": "Damage",
+    "overview": "Junkrat is an explosive damage hero specialized in spam pressure and chokepoint control.",
+    "abilities": "He uses grenades, traps, and mines for area denial, then secures multi-kills with Rip-Tire timing.",
+    "playstyle_tags": "explosives trap mines grenades area denial frag launcher",
+    "combined_text": "Junkrat is a Damage hero. Junkrat is an explosive damage hero specialized in spam pressure and chokepoint control. He uses grenades, traps, and mines for area denial, then secures multi-kills with Rip-Tire timing. Playstyle: explosives trap mines grenades area denial frag launcher",
+    "image_url": "data/images/junkrat.png"
+  },
+  "mei": {
+    "name": "Mei",
+    "slug": "mei",
+    "role": "Damage",
+    "overview": "Mei is a control-focused damage hero that slows pushes and isolates targets.",
+    "abilities": "She walls off enemies, survives with Cryo-Freeze, and uses Blizzard to lock down teamfights.",
+    "playstyle_tags": "freeze ice wall stall control snowball cryo-freeze endothermic",
+    "combined_text": "Mei is a Damage hero. Mei is a control-focused damage hero that slows pushes and isolates targets. She walls off enemies, survives with Cryo-Freeze, and uses Blizzard to lock down teamfights. Playstyle: freeze ice wall stall control snowball cryo-freeze endothermic",
+    "image_url": "data/images/mei.png"
+  },
+  "pharah": {
+    "name": "Pharah",
+    "slug": "pharah",
+    "role": "Damage",
+    "overview": "Pharah is an aerial damage hero that dominates vertical space with splash rockets.",
+    "abilities": "She uses Jump Jet and Hover Jets for positioning, then pressures grouped enemies and secures fights with Barrage.",
+    "playstyle_tags": "aerial rocket launcher jump jet hover concussive blast",
+    "combined_text": "Pharah is a Damage hero. Pharah is an aerial damage hero that dominates vertical space with splash rockets. She uses Jump Jet and Hover Jets for positioning, then pressures grouped enemies and secures fights with Barrage. Playstyle: aerial rocket launcher jump jet hover concussive blast",
+    "image_url": "data/images/pharah.png"
+  },
+  "reaper": {
+    "name": "Reaper",
+    "slug": "reaper",
+    "role": "Damage",
+    "overview": "Reaper is a close-range flanker built to melt tanks and punish short-range duels.",
+    "abilities": "He engages through teleport angles, survives with Wraith Form, and can wipe clustered teams with Death Blossom.",
+    "playstyle_tags": "flanker shotgun teleport wraith close range shadow step",
+    "combined_text": "Reaper is a Damage hero. Reaper is a close-range flanker built to melt tanks and punish short-range duels. He engages through teleport angles, survives with Wraith Form, and can wipe clustered teams with Death Blossom. Playstyle: flanker shotgun teleport wraith close range shadow step",
+    "image_url": "data/images/reaper.png"
+  },
+  "sojourn": {
+    "name": "Sojourn",
+    "slug": "sojourn",
+    "role": "Damage",
+    "overview": "Sojourn is a mobile hitscan damage hero with strong poke and burst conversion.",
+    "abilities": "She builds railgun charge through sustained fire, repositions with Power Slide, and spikes fights with Overclock.",
+    "playstyle_tags": "railgun slide mid range hitscan power slide",
+    "combined_text": "Sojourn is a Damage hero. Sojourn is a mobile hitscan damage hero with strong poke and burst conversion. She builds railgun charge through sustained fire, repositions with Power Slide, and spikes fights with Overclock. Playstyle: railgun slide mid range hitscan power slide",
+    "image_url": "data/images/sojourn.png"
+  },
+  "soldier-76": {
+    "name": "Soldier: 76",
+    "slug": "soldier-76",
+    "role": "Damage",
+    "overview": "Soldier: 76 is a flexible hitscan damage hero for sustained pressure and self-sufficiency.",
+    "abilities": "He controls mid-range with rifle fire, Helix Rockets, Biotic Field sustain, sprint flanks, and Tactical Visor consistency.",
+    "playstyle_tags": "hitscan sprint helix rockets heal run and gun biotic field",
+    "combined_text": "Soldier: 76 is a Damage hero. Soldier: 76 is a flexible hitscan damage hero for sustained pressure and self-sufficiency. He controls mid-range with rifle fire, Helix Rockets, Biotic Field sustain, sprint flanks, and Tactical Visor consistency. Playstyle: hitscan sprint helix rockets heal run and gun biotic field",
+    "image_url": "data/images/soldier-76.png"
+  },
+  "sombra": {
+    "name": "Sombra",
+    "slug": "sombra",
+    "role": "Damage",
+    "overview": "Sombra is a stealth disruption damage hero who disables key enemy tools.",
+    "abilities": "She scouts invisibly, hacks priority targets, uses burst follow-up, and controls tempo through translocator repositioning.",
+    "playstyle_tags": "hack disrupt stealth flanker support disabler translocator",
+    "combined_text": "Sombra is a Damage hero. Sombra is a stealth disruption damage hero who disables key enemy tools. She scouts invisibly, hacks priority targets, uses burst follow-up, and controls tempo through translocator repositioning. Playstyle: hack disrupt stealth flanker support disabler translocator",
+    "image_url": "data/images/sombra.png"
+  },
+  "symmetra": {
+    "name": "Symmetra",
+    "slug": "symmetra",
+    "role": "Damage",
+    "overview": "Symmetra is a setup-oriented damage hero focused on map control and utility.",
+    "abilities": "She uses turrets and teleporter to shape engagements, then scales beam damage in sustained close-range fights.",
+    "playstyle_tags": "turret teleporter shield beam setup defense photon projector",
+    "combined_text": "Symmetra is a Damage hero. Symmetra is a setup-oriented damage hero focused on map control and utility. She uses turrets and teleporter to shape engagements, then scales beam damage in sustained close-range fights. Playstyle: turret teleporter shield beam setup defense photon projector",
+    "image_url": "data/images/symmetra.png"
+  },
+  "torbjorn": {
+    "name": "Torbjörn",
+    "slug": "torbjorn",
+    "role": "Damage",
+    "overview": "Torbjorn is a builder damage hero with strong defensive control and anti-dive pressure.",
+    "abilities": "He combines turret angles, Overload survivability, and Molten Core zoning to lock down key areas.",
+    "playstyle_tags": "turret molten core overload forge hammer rivet gun",
+    "combined_text": "Torbjörn is a Damage hero. Torbjorn is a builder damage hero with strong defensive control and anti-dive pressure. He combines turret angles, Overload survivability, and Molten Core zoning to lock down key areas. Playstyle: turret molten core overload forge hammer rivet gun",
+    "image_url": "data/images/torbjorn.png"
+  },
+  "tracer": {
+    "name": "Tracer",
+    "slug": "tracer",
+    "role": "Damage",
+    "overview": "Tracer is a hyper-mobile flanker that excels at backline pressure and cleanups.",
+    "abilities": "She blinks for constant off-angle pressure, rewinds with Recall to survive, and bursts targets with Pulse Bomb.",
+    "playstyle_tags": "hyper mobile flanker blink recall close range pulse bomb",
+    "combined_text": "Tracer is a Damage hero. Tracer is a hyper-mobile flanker that excels at backline pressure and cleanups. She blinks for constant off-angle pressure, rewinds with Recall to survive, and bursts targets with Pulse Bomb. Playstyle: hyper mobile flanker blink recall close range pulse bomb",
+    "image_url": "data/images/tracer.png"
+  },
+  "venture": {
+    "name": "Venture",
+    "slug": "venture",
+    "role": "Damage",
+    "overview": "Venture is a close-range skirmisher focused on fast engages and burst displacement.",
+    "abilities": "They chain drilling movement and underground mobility to contest space, disrupt formations, and finish isolated enemies.",
+    "playstyle_tags": "drill melee dive underground burst smart excavator",
+    "combined_text": "Venture is a Damage hero. Venture is a close-range skirmisher focused on fast engages and burst displacement. They chain drilling movement and underground mobility to contest space, disrupt formations, and finish isolated enemies. Playstyle: drill melee dive underground burst smart excavator",
+    "image_url": "data/images/venture.png"
+  },
+  "widowmaker": {
+    "name": "Widowmaker",
+    "slug": "widowmaker",
+    "role": "Damage",
+    "overview": "Widowmaker is a long-range sniper damage hero built around picks and sightline control.",
+    "abilities": "She uses charged scoped shots, grappling reposition, and Infra-Sight information to control pacing from distance.",
+    "playstyle_tags": "sniper one-shot long range grapple venom mine infra-sight",
+    "combined_text": "Widowmaker is a Damage hero. Widowmaker is a long-range sniper damage hero built around picks and sightline control. She uses charged scoped shots, grappling reposition, and Infra-Sight information to control pacing from distance. Playstyle: sniper one-shot long range grapple venom mine infra-sight",
+    "image_url": "data/images/widowmaker.png"
+  },
+  "ana": {
+    "name": "Ana",
+    "slug": "ana",
+    "role": "Support",
+    "overview": "Ana is a long-range support hero with high-impact utility and strong healing throughput.",
+    "abilities": "She heals and damages with Biotic Rifle, swings duels with Sleep Dart and Biotic Grenade, and empowers carries with Nano Boost.",
+    "playstyle_tags": "sniper healer sleep dart nano boost biotic grenade rifle",
+    "combined_text": "Ana is a Support hero. Ana is a long-range support hero with high-impact utility and strong healing throughput. She heals and damages with Biotic Rifle, swings duels with Sleep Dart and Biotic Grenade, and empowers carries with Nano Boost. Playstyle: sniper healer sleep dart nano boost biotic grenade rifle",
+    "image_url": "data/images/ana.png"
+  },
+  "baptiste": {
+    "name": "Baptiste",
+    "slug": "baptiste",
+    "role": "Support",
+    "overview": "Baptiste is a utility support hero that blends burst healing with reliable damage.",
+    "abilities": "He stabilizes teams with healing launcher and Regenerative Burst, denies kills with Immortality Field, and amplifies fire through Matrix.",
+    "playstyle_tags": "healing immortality field amplification matrix biotic launcher",
+    "combined_text": "Baptiste is a Support hero. Baptiste is a utility support hero that blends burst healing with reliable damage. He stabilizes teams with healing launcher and Regenerative Burst, denies kills with Immortality Field, and amplifies fire through Matrix. Playstyle: healing immortality field amplification matrix biotic launcher",
+    "image_url": "data/images/baptiste.png"
+  },
+  "brigitte": {
+    "name": "Brigitte",
+    "slug": "brigitte",
+    "role": "Support",
+    "overview": "Brigitte is a brawl support who protects teammates in close-to-mid range fights.",
+    "abilities": "She triggers Inspire through melee pressure, peels with whip and shield tools, and sustains allies with Repair Packs.",
+    "playstyle_tags": "melee support healer shield bash armor inspire repair pack",
+    "combined_text": "Brigitte is a Support hero. Brigitte is a brawl support who protects teammates in close-to-mid range fights. She triggers Inspire through melee pressure, peels with whip and shield tools, and sustains allies with Repair Packs. Playstyle: melee support healer shield bash armor inspire repair pack",
+    "image_url": "data/images/brigitte.png"
+  },
+  "illari": {
+    "name": "Illari",
+    "slug": "illari",
+    "role": "Support",
+    "overview": "Illari is a hybrid support who provides strong damage while maintaining backline healing.",
+    "abilities": "She anchors sustain with Healing Pylon, pressures with long-range shots, and creates teamfight win conditions with Captive Sun.",
+    "playstyle_tags": "solar rifle pylon healing damage hybrid captive sun",
+    "combined_text": "Illari is a Support hero. Illari is a hybrid support who provides strong damage while maintaining backline healing. She anchors sustain with Healing Pylon, pressures with long-range shots, and creates teamfight win conditions with Captive Sun. Playstyle: solar rifle pylon healing damage hybrid captive sun",
+    "image_url": "data/images/illari.png"
+  },
+  "juno": {
+    "name": "Juno",
+    "slug": "juno",
+    "role": "Support",
+    "overview": "Juno is a mobile support focused on tempo control, repositioning, and sustained team uptime.",
+    "abilities": "She combines movement utility and targeted healing tools to enable aggressive rotations and recover fights quickly.",
+    "playstyle_tags": "aerial flight speed boost healing orbital ray glide",
+    "combined_text": "Juno is a Support hero. Juno is a mobile support focused on tempo control, repositioning, and sustained team uptime. She combines movement utility and targeted healing tools to enable aggressive rotations and recover fights quickly. Playstyle: aerial flight speed boost healing orbital ray glide",
+    "image_url": "data/images/juno.png"
+  },
+  "kiriko": {
+    "name": "Kiriko",
+    "slug": "kiriko",
+    "role": "Support",
+    "overview": "Kiriko is a high-mobility support with clutch defensive utility and strong duel potential.",
+    "abilities": "She heals with Ofuda, pressures with kunai headshots, saves allies with Protection Suzu, and accelerates pushes with Kitsune Rush.",
+    "playstyle_tags": "teleport suzu kunai kitsune rush swift step healer",
+    "combined_text": "Kiriko is a Support hero. Kiriko is a high-mobility support with clutch defensive utility and strong duel potential. She heals with Ofuda, pressures with kunai headshots, saves allies with Protection Suzu, and accelerates pushes with Kitsune Rush. Playstyle: teleport suzu kunai kitsune rush swift step healer",
+    "image_url": "data/images/kiriko.png"
+  },
+  "lifeweaver": {
+    "name": "Lifeweaver",
+    "slug": "lifeweaver",
+    "role": "Support",
+    "overview": "Lifeweaver is a utility support centered on positioning control and defensive rescue.",
+    "abilities": "He sustains with charged healing, repositions allies with Life Grip, alters terrain with Petal Platform, and stabilizes fights with Tree of Life.",
+    "playstyle_tags": "heal pull platform tree of life protection petal platform",
+    "combined_text": "Lifeweaver is a Support hero. Lifeweaver is a utility support centered on positioning control and defensive rescue. He sustains with charged healing, repositions allies with Life Grip, alters terrain with Petal Platform, and stabilizes fights with Tree of Life. Playstyle: heal pull platform tree of life protection petal platform",
+    "image_url": "data/images/lifeweaver.png"
+  },
+  "lucio": {
+    "name": "Lúcio",
+    "slug": "lucio",
+    "role": "Support",
+    "overview": "Lucio is an aura support that controls team tempo through speed and sustain.",
+    "abilities": "He swaps between heal and speed auras, amplifies impact with Amp It Up, displaces enemies with boop, and defends engages via Sound Barrier.",
+    "playstyle_tags": "speed boost heal aura skate wallride amp it up crossfade",
+    "combined_text": "Lúcio is a Support hero. Lucio is an aura support that controls team tempo through speed and sustain. He swaps between heal and speed auras, amplifies impact with Amp It Up, displaces enemies with boop, and defends engages via Sound Barrier. Playstyle: speed boost heal aura skate wallride amp it up crossfade",
+    "image_url": "data/images/lucio.png"
+  },
+  "mercy": {
+    "name": "Mercy",
+    "slug": "mercy",
+    "role": "Support",
+    "overview": "Mercy is a beam support focused on consistent healing, damage boost, and ally enablement.",
+    "abilities": "She repositions with Guardian Angel, resurrects key teammates, and uses Valkyrie to increase teamwide uptime and pressure.",
+    "playstyle_tags": "beam heal resurrect guardian angel staff caduceus damage boost",
+    "combined_text": "Mercy is a Support hero. Mercy is a beam support focused on consistent healing, damage boost, and ally enablement. She repositions with Guardian Angel, resurrects key teammates, and uses Valkyrie to increase teamwide uptime and pressure. Playstyle: beam heal resurrect guardian angel staff caduceus damage boost",
+    "image_url": "data/images/mercy.png"
+  },
+  "moira": {
+    "name": "Moira",
+    "slug": "moira",
+    "role": "Support",
+    "overview": "Moira is a resource-based support that balances healing output and close-range damage.",
+    "abilities": "She alternates biotic grasp modes, controls space with orbs, escapes with Fade, and sustains teamfights using Coalescence.",
+    "playstyle_tags": "orb fade biotic grasp drain heal coalescence",
+    "combined_text": "Moira is a Support hero. Moira is a resource-based support that balances healing output and close-range damage. She alternates biotic grasp modes, controls space with orbs, escapes with Fade, and sustains teamfights using Coalescence. Playstyle: orb fade biotic grasp drain heal coalescence",
+    "image_url": "data/images/moira.png"
+  },
+  "zenyatta": {
+    "name": "Zenyatta",
+    "slug": "zenyatta",
+    "role": "Support",
+    "overview": "Zenyatta is a ranged support that amplifies team focus fire and pick potential.",
+    "abilities": "He applies Harmony and Discord orbs for healing and damage amplification, then stabilizes critical fights with Transcendence.",
+    "playstyle_tags": "orb of harmony discord transcendence meditate kick",
+    "combined_text": "Zenyatta is a Support hero. Zenyatta is a ranged support that amplifies team focus fire and pick potential. He applies Harmony and Discord orbs for healing and damage amplification, then stabilizes critical fights with Transcendence. Playstyle: orb of harmony discord transcendence meditate kick",
+    "image_url": "data/images/zenyatta.png"
+  }
+}

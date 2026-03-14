@@ -1,0 +1,52 @@
+EMBEDDINGS Y RAG: EXPLICACION GENERAL Y EN ESTE PROYECTO
+
+1) EMBEDDINGS
+
+En general:
+Un embedding es una representacion numerica (un vector) de un texto, imagen o dato.
+La idea es que elementos semanticamente parecidos queden cerca en el espacio vectorial.
+Con eso se puede medir similitud con operaciones matematicas (por ejemplo, producto punto o coseno).
+
+En este proyecto:
+- Cada heroe de Overwatch tiene un texto descriptivo consolidado.
+- Ese texto se transforma a embedding con el modelo de OpenAI.
+- Los embeddings se normalizan y se guardan en cache en data/cache/hero_vectors.npy.
+- Luego, para recomendar, se compara el vector de consulta final contra todos los heroes para rankear por similitud.
+
+2) RAG
+
+En general:
+RAG significa Retrieval-Augmented Generation.
+Es un enfoque donde primero se recupera contexto relevante (retrieval) y luego ese contexto se usa para mejorar la respuesta final.
+La ventaja es reducir respuestas genericas y apoyarse en informacion semantica cercana al caso.
+
+En este proyecto:
+- RAG no se usa como chatbot largo, sino como enriquecimiento del perfil del jugador.
+- A partir de heroes jugados (y query opcional), se construye una consulta interna.
+- El sistema recupera heroes semantica y vectorialmente parecidos (contexto RAG).
+- Ese contexto se usa para construir un PlayerProfile (roles dominantes, rasgos, resumen).
+- Ademas, el contexto recuperado aporta una senal extra al ranking final.
+
+3) COMO SE COMBINAN EN EL RANKING DE ESTE PROYECTO
+
+El vector final se arma con tres componentes:
+- 0.6: query del usuario (intencion actual)
+- 0.3: promedio de heroes jugados (evidencia directa de estilo)
+- 0.1: promedio de contexto recuperado por RAG (senal inferida)
+
+Interpretacion rapida:
+- 0.3 pesa mas que 0.1 porque el sistema confia mas en lo que el jugador realmente juega,
+  y usa el contexto RAG como ajuste fino, no como fuente principal.
+
+4) GUION PARA EXPLICAR EL DIAGRAMA (DIALOGO)
+
+"Este diagrama muestra el flujo completo del recomendador. Primero, el usuario entra por la
+interfaz o por CLI con una query de estilo y, opcionalmente, heroes que ya juega. Luego el
+sistema carga el catalogo de heroes y reutiliza o reconstruye el indice de embeddings. Si hay
+heroes jugados, se activa la parte RAG: se construye una consulta interna con esos heroes,
+se recupera contexto semantico similar y se arma un perfil del jugador. Con eso, el modelo
+combina tres senales: la intencion actual de la query con peso 0.6, el historial directo del
+jugador con peso 0.3 y el contexto recuperado por RAG con peso 0.1. Esa fusion produce un
+vector final que se compara contra todos los heroes para calcular similitud, aplicar filtros y
+devolver el Top-K. Al final, no solo entrega recomendaciones, tambien muestra un perfil RAG
+explicable para justificar por que salieron esos heroes."

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ow-rag-multimodal"
+version = "0.1.0"
+description = "Overwatch recommender with RAG player profiles and text embeddings"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "openai>=1.40.0",
+  "gradio>=5.0.0",
+]
+
+[project.scripts]
+ow-rag = "ow_rag_multimodal.cli:main"
+ow-rag-ui = "ow_rag_multimodal.ui:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
