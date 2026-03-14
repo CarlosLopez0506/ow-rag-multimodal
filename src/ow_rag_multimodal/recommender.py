@@ -13,11 +13,13 @@ from .embeddings import (
     OpenAIEmbeddingClient,
     normalize_vector,
 )
+from .image_embeddings import CLIPImageIndex
 from .models import PlayerProfile, Recommendation
 from .rag import HeroRAG
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CACHE_DIR = PROJECT_ROOT / "data" / "cache"
+DEFAULT_IMAGES_DIR = PROJECT_ROOT / "data" / "images"
 DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small"
 
 
@@ -41,16 +43,20 @@ class OWRAGMultimodalRecommender:
         self,
         heroes_path: Path = DEFAULT_HEROES_PATH,
         cache_dir: Path = DEFAULT_CACHE_DIR,
+        images_dir: Path = DEFAULT_IMAGES_DIR,
         embedding_model: str = DEFAULT_EMBEDDING_MODEL,
         force_refresh_cache: bool = False,
+        alpha_image: float = 0.0,
     ) -> None:
-        """Initializes OpenAI client, vector index, and RAG helper.
+        """Initializes OpenAI client, vector index, RAG helper, and optionally CLIP.
 
         Args:
             heroes_path: Path to heroes dataset JSON.
             cache_dir: Directory for vector cache artifacts.
+            images_dir: Directory containing hero portrait PNGs.
             embedding_model: Text embedding model name.
             force_refresh_cache: Whether to force index rebuild.
+            alpha_image: Image signal weight in [0, 1]. 0 = text-only (default).
 
         Raises:
             RuntimeError: If the ``openai`` dependency is not installed.
@@ -81,6 +87,17 @@ class OWRAGMultimodalRecommender:
         )
         self.index_by_slug = {hero.slug: i for i, hero in enumerate(self.heroes)}
 
+        self._alpha_image = alpha_image
+        self.clip_index: CLIPImageIndex | None = None
+        self.image_vectors: np.ndarray | None = None
+        if alpha_image > 0.0:
+            self.clip_index = CLIPImageIndex(
+                heroes=self.heroes,
+                cache_dir=cache_dir,
+                images_dir=images_dir,
+            )
+            self.image_vectors = self.clip_index.build(force_refresh=force_refresh_cache)
+
     def recommend(
         self,
         query: str,
@@ -89,6 +106,10 @@ class OWRAGMultimodalRecommender:
         role_filter: str | None = None,
         profile_top_k: int = 6,
         exclude_played: bool = True,
+        w_query: float = 0.6,
+        w_played: float = 0.05,
+        w_context: float = 0.35,
+        alpha_image: float | None = None,
     ) -> RecommenderResult:
         """Computes ranked hero recommendations from query and play history.
 
@@ -99,6 +120,10 @@ class OWRAGMultimodalRecommender:
             role_filter: Optional role filter.
             profile_top_k: Number of contexts for profile construction.
             exclude_played: Whether to remove already played heroes from results.
+            w_query: Weight for the query signal.
+            w_played: Weight for the played-heroes centroid signal.
+            w_context: Weight for the retrieved-context centroid signal.
+            alpha_image: Image signal weight override. Defaults to value set at init.
 
         Returns:
             A ``RecommenderResult`` with ranked recommendations and optional profile.
@@ -126,7 +151,7 @@ class OWRAGMultimodalRecommender:
         if query.strip():
             query_vec = normalize_vector(self.embedding_client.embed_texts([query])[0])
             vectors.append(query_vec)
-            weights.append(0.6)
+            weights.append(w_query)
 
         if played:
             profile = self.rag.build_profile(played_refs=played_refs, extra_context=query, top_k=profile_top_k)
@@ -134,13 +159,13 @@ class OWRAGMultimodalRecommender:
             played_indices = [self.index_by_slug[h.slug] for h in played]
             played_vec = normalize_vector(np.mean(self.hero_vectors[played_indices], axis=0))
             vectors.append(played_vec)
-            weights.append(0.3)
+            weights.append(w_played)
 
             if profile.retrieved_context:
                 ctx_indices = [self.index_by_slug[item.slug] for item in profile.retrieved_context]
                 ctx_vec = normalize_vector(np.mean(self.hero_vectors[ctx_indices], axis=0))
                 vectors.append(ctx_vec)
-                weights.append(0.1)
+                weights.append(w_context)
 
         if not vectors:
             raise ValueError("Debes enviar --query o al menos un héroe en --played")
@@ -150,7 +175,16 @@ class OWRAGMultimodalRecommender:
             total += weight * vector
         final_query = normalize_vector(total)
 
-        scores = self.hero_vectors @ final_query
+        text_scores = self.hero_vectors @ final_query
+
+        eff_alpha = self._alpha_image if alpha_image is None else alpha_image
+        if eff_alpha > 0.0 and self.clip_index is not None and self.image_vectors is not None:
+            image_query = self.clip_index.encode_query(query if query.strip() else " ")
+            image_scores = self.image_vectors @ image_query
+            scores = (1.0 - eff_alpha) * text_scores + eff_alpha * image_scores
+        else:
+            scores = text_scores
+
         ranked = np.argsort(scores)[::-1]
 
         recommendations: list[Recommendation] = []

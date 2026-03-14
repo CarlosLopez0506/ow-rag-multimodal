@@ -17,6 +17,13 @@ dependencies = [
 [project.scripts]
 ow-rag = "ow_rag_multimodal.cli:main"
 ow-rag-ui = "ow_rag_multimodal.ui:main"
+ow-rag-eval = "ow_rag_multimodal.eval:main"
+
+[project.optional-dependencies]
+multimodal = [
+  "sentence-transformers>=3.0",
+  "Pillow>=10.0",
+]
 
 [tool.setuptools]
 package-dir = {"" = "src"}

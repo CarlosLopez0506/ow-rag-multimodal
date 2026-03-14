@@ -1,0 +1,24 @@
+Loading heroes and building index...
+Running self-retrieval on 43 heroes...
+
+Self-retrieval
+------------------------------------------
+Role             hit@1     hit@3     hit@5
+------------------------------------------
+Damage          1.0000    1.0000    1.0000
+Support         1.0000    1.0000    1.0000
+Tank            1.0000    1.0000    1.0000
+Overall         1.0000    1.0000    1.0000
+------------------------------------------
+
+Running leave-one-out (n_played=2, seed=42)...
+
+Leave-one-out (n_played=2, seed=42)
+--------------------------------
+Role             hit@3     hit@5
+--------------------------------
+Damage          0.1579    0.3158
+Support         0.6364    0.6364
+Tank            0.1538    0.2308
+Overall         0.2791    0.3721
+--------------------------------

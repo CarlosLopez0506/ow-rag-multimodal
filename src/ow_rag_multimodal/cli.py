@@ -73,6 +73,12 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Muestra contexto recuperado por RAG para el perfil.",
     )
+    parser.add_argument(
+        "--alpha-image",
+        type=float,
+        default=0.0,
+        help="Peso de la señal de imagen CLIP [0-1]. Requiere data/images/ poblado. (default: 0.0)",
+    )
     return parser
 
 
@@ -131,6 +137,7 @@ def main() -> int:
             cache_dir=args.cache_dir,
             embedding_model=args.embedding_model,
             force_refresh_cache=args.refresh_cache,
+            alpha_image=args.alpha_image,
         )
         result = recommender.recommend(
             query=args.query,
