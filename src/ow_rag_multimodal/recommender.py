@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -21,7 +22,8 @@ from .rag import HeroRAG
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CACHE_DIR = PROJECT_ROOT / "data" / "cache"
 DEFAULT_IMAGES_DIR = PROJECT_ROOT / "data" / "images"
-DEFAULT_EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small"   # used when OPENAI_API_KEY is set
+DEFAULT_LOCAL_EMBEDDING_MODEL = "all-MiniLM-L6-v2"  # used when no API key is present
 
 
 @dataclass(frozen=True)
@@ -45,28 +47,43 @@ class OWRAGMultimodalRecommender:
         heroes_path: Path = DEFAULT_HEROES_PATH,
         cache_dir: Path = DEFAULT_CACHE_DIR,
         images_dir: Path = DEFAULT_IMAGES_DIR,
-        embedding_model: str = DEFAULT_EMBEDDING_MODEL,
+        embedding_model: str | None = None,
         force_refresh_cache: bool = False,
         alpha_image: float = 0.3,
     ) -> None:
-        """Initializes OpenAI client, vector index, RAG helper, and optionally CLIP.
+        """Initializes the embedding client (OpenAI or local), vector index, RAG helper, and CLIP.
+
+        Uses OpenAI embeddings when ``OPENAI_API_KEY`` is set in the environment,
+        otherwise falls back to sentence-transformers (no API key required).
 
         Args:
             heroes_path: Path to heroes dataset JSON.
             cache_dir: Directory for vector cache artifacts.
             images_dir: Directory containing hero portrait PNGs.
-            embedding_model: Text embedding model name.
+            embedding_model: Text embedding model name. Defaults to
+                ``text-embedding-3-small`` for OpenAI or ``all-MiniLM-L6-v2`` locally.
             force_refresh_cache: Whether to force index rebuild.
-            alpha_image: Image signal weight in [0, 1]. 0 = text-only (default).
-
-        Raises:
-            RuntimeError: If the ``openai`` dependency is not installed.
+            alpha_image: Image signal weight in [0, 1]. 0 = text-only.
         """
 
         self.heroes = load_heroes(heroes_path)
-        self.embedding_client = SentenceTransformerEmbeddingClient(
-            model_name=embedding_model,
-        )
+
+        api_key = os.getenv("OPENAI_API_KEY")
+        if api_key:
+            try:
+                from openai import OpenAI
+            except ModuleNotFoundError as exc:
+                raise RuntimeError("Falta dependencia 'openai'. Instala con pip install openai") from exc
+            model_name = embedding_model or DEFAULT_EMBEDDING_MODEL
+            self.embedding_client: OpenAIEmbeddingClient | SentenceTransformerEmbeddingClient = OpenAIEmbeddingClient(
+                client=OpenAI(api_key=api_key),
+                text_model=model_name,
+            )
+        else:
+            model_name = embedding_model or DEFAULT_LOCAL_EMBEDDING_MODEL
+            self.embedding_client = SentenceTransformerEmbeddingClient(
+                model_name=model_name,
+            )
 
         index = MultimodalIndex(
             heroes=self.heroes,

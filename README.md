@@ -78,15 +78,31 @@ ow-rag-multimodal/
 
 ## Setup
 
-No API key needed — all models run locally.
-
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e '.[multimodal]'
 ```
 
-On first run, sentence-transformers will download:
+The system auto-detects which embedding backend to use:
+
+| Condition | Text model used |
+|---|---|
+| `OPENAI_API_KEY` set in environment | `text-embedding-3-small` (OpenAI API) |
+| No API key | `all-MiniLM-L6-v2` (local, sentence-transformers) |
+
+**With OpenAI key:**
+```bash
+export OPENAI_API_KEY=sk-...
+ow-rag-ui
+```
+
+**Without API key (fully local):**
+```bash
+ow-rag-ui
+```
+
+On first local run, sentence-transformers will download:
 - `all-MiniLM-L6-v2` (~80 MB) — text embeddings
 - `clip-ViT-B-32` (~600 MB) — visual embeddings
 
