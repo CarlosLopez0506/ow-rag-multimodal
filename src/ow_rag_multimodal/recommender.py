@@ -11,6 +11,7 @@ from .data import DEFAULT_HEROES_PATH, VALID_ROLES, load_heroes, resolve_heroes_
 from .embeddings import (
     MultimodalIndex,
     OpenAIEmbeddingClient,
+    SentenceTransformerEmbeddingClient,
     normalize_vector,
 )
 from .image_embeddings import CLIPImageIndex
@@ -20,7 +21,7 @@ from .rag import HeroRAG
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CACHE_DIR = PROJECT_ROOT / "data" / "cache"
 DEFAULT_IMAGES_DIR = PROJECT_ROOT / "data" / "images"
-DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small"
+DEFAULT_EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 
 
 @dataclass(frozen=True)
@@ -46,7 +47,7 @@ class OWRAGMultimodalRecommender:
         images_dir: Path = DEFAULT_IMAGES_DIR,
         embedding_model: str = DEFAULT_EMBEDDING_MODEL,
         force_refresh_cache: bool = False,
-        alpha_image: float = 0.0,
+        alpha_image: float = 0.3,
     ) -> None:
         """Initializes OpenAI client, vector index, RAG helper, and optionally CLIP.
 
@@ -62,16 +63,9 @@ class OWRAGMultimodalRecommender:
             RuntimeError: If the ``openai`` dependency is not installed.
         """
 
-        try:
-            from openai import OpenAI
-        except ModuleNotFoundError as exc:
-            raise RuntimeError("Falta dependencia 'openai'. Instala el proyecto con pip install -e .") from exc
-
-        self.client = OpenAI()
         self.heroes = load_heroes(heroes_path)
-        self.embedding_client = OpenAIEmbeddingClient(
-            client=self.client,
-            text_model=embedding_model,
+        self.embedding_client = SentenceTransformerEmbeddingClient(
+            model_name=embedding_model,
         )
 
         index = MultimodalIndex(

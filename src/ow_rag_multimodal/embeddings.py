@@ -77,6 +77,48 @@ class OpenAIEmbeddingClient:
         return np.vstack(vectors)
 
 
+class SentenceTransformerEmbeddingClient:
+    """Local embedding client using sentence-transformers (no API key required)."""
+
+    def __init__(self, model_name: str = "all-MiniLM-L6-v2", batch_size: int = 32) -> None:
+        """Initializes the sentence-transformers client.
+
+        Args:
+            model_name: HuggingFace model name to load.
+            batch_size: Number of texts per encoding batch.
+        """
+
+        try:
+            from sentence_transformers import SentenceTransformer
+        except ModuleNotFoundError as exc:
+            raise RuntimeError(
+                "Falta dependencia 'sentence-transformers'. "
+                "Instala con: pip install -e '.[multimodal]'"
+            ) from exc
+
+        self.text_model = model_name
+        self.batch_size = batch_size
+        self._model = SentenceTransformer(model_name)
+
+    def embed_texts(self, texts: list[str]) -> np.ndarray:
+        """Generates embeddings for a list of texts.
+
+        Args:
+            texts: Input texts to embed.
+
+        Returns:
+            A 2D float32 array with one row per input text.
+        """
+
+        vectors = self._model.encode(
+            texts,
+            batch_size=self.batch_size,
+            convert_to_numpy=True,
+            show_progress_bar=False,
+        )
+        return np.array(vectors, dtype=np.float32)
+
+
 @dataclass(frozen=True)
 class MultimodalIndex:
     """Vector index manager with cache metadata validation.
@@ -89,7 +131,7 @@ class MultimodalIndex:
 
     heroes: list[HeroDoc]
     cache_dir: Path
-    embedding_client: OpenAIEmbeddingClient
+    embedding_client: OpenAIEmbeddingClient | SentenceTransformerEmbeddingClient
 
     @property
     def vectors_path(self) -> Path:

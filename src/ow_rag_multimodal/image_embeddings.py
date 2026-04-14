@@ -6,8 +6,25 @@ import hashlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 import numpy as np
+
+_CLIP_MODEL_CACHE: dict[str, Any] = {}
+
+
+def _get_or_load_clip(model_name: str) -> Any:
+    """Returns a cached SentenceTransformer CLIP model, loading it on first call."""
+    if model_name not in _CLIP_MODEL_CACHE:
+        try:
+            from sentence_transformers import SentenceTransformer
+        except ImportError as exc:
+            raise RuntimeError(
+                "Missing dependencies for image embeddings. "
+                "Install with: pip install -e '.[multimodal]'"
+            ) from exc
+        _CLIP_MODEL_CACHE[model_name] = SentenceTransformer(model_name)
+    return _CLIP_MODEL_CACHE[model_name]
 
 from .embeddings import normalize_rows, normalize_vector
 from .models import HeroDoc
@@ -98,14 +115,13 @@ class CLIPImageIndex:
 
         try:
             from PIL import Image
-            from sentence_transformers import SentenceTransformer
         except ImportError as exc:
             raise RuntimeError(
                 "Missing dependencies for image embeddings. "
                 "Install with: pip install -e '.[multimodal]'"
             ) from exc
 
-        model = SentenceTransformer("clip-ViT-B-32")
+        model = _get_or_load_clip("clip-ViT-B-32")
 
         # Build a slug→index map so we can place vectors in the right rows
         slug_to_idx = {hero.slug: i for i, hero in enumerate(self.heroes)}
@@ -141,15 +157,7 @@ class CLIPImageIndex:
         Raises:
             RuntimeError: If ``sentence-transformers`` is not installed.
         """
-        try:
-            from sentence_transformers import SentenceTransformer
-        except ImportError as exc:
-            raise RuntimeError(
-                "Missing dependencies for image embeddings. "
-                "Install with: pip install -e '.[multimodal]'"
-            ) from exc
-
-        model = SentenceTransformer("clip-ViT-B-32")
+        model = _get_or_load_clip("clip-ViT-B-32")
         vec = model.encode([query], convert_to_numpy=True)[0].astype(np.float32)
         return normalize_vector(vec)
 

@@ -27,16 +27,16 @@ def _history_markdown() -> str:
     history = load_history(DEFAULT_HISTORY_PATH)
     counts = history.get("played_counts", {})
     if not isinstance(counts, dict) or not counts:
-        return "### Historial RAG\nVacío."
+        return "### Tus héroes frecuentes\nAún no tienes historial."
 
     ranking = sorted(
         ((str(slug), int(count)) for slug, count in counts.items()),
         key=lambda item: item[1],
         reverse=True,
     )[:15]
-    lines = ["### Historial RAG", "Top héroes guardados:"]
+    lines = ["### Tus héroes frecuentes", "Tus héroes más jugados:"]
     for idx, (slug, count) in enumerate(ranking, start=1):
-        lines.append(f"{idx}. `{slug}` - {count} usos")
+        lines.append(f"{idx}. `{slug}` - {count} veces")
     return "\n".join(lines)
 
 
@@ -86,7 +86,10 @@ def _pick_available_port(host: str, start_port: int, max_tries: int) -> int:
     )
 
 
-def build_interface(heroes_path: Path = Path("data/heroes.json")) -> gr.Blocks:
+def build_interface(
+    heroes_path: Path = Path("data/heroes.json"),
+    images_dir: Path = Path("data/images"),
+) -> gr.Blocks:
     """Builds the full Gradio app with stateful callbacks.
 
     Args:
@@ -141,18 +144,18 @@ def build_interface(heroes_path: Path = Path("data/heroes.json")) -> gr.Blocks:
         selected = list(selected_slugs or [])
         effective = build_effective_refs(selected, include_history, history_top_n)
         if not effective:
-            return "### Perfil usado para recomendar\nVacío. Selecciona héroes o usa query."
+            return "### Tu selección\nSelecciona héroes arriba o describe tu estilo de juego."
 
         selected_set = set(selected)
         selected_count = sum(1 for slug in effective if slug in selected_set)
         history_count = len(effective) - selected_count
         lines = [
-            "### Perfil usado para recomendar",
-            f"Total: {len(effective)} | Selección: {selected_count} | Historial: {history_count}",
+            "### Tu selección",
+            f"{len(effective)} héroes en total — {selected_count} seleccionados, {history_count} de tu historial",
         ]
         for idx, slug in enumerate(effective, start=1):
-            source = "selección" if slug in selected_set else "historial"
-            lines.append(f"{idx}. {slug_to_name.get(slug, slug)} [`{slug}`] - {source}")
+            source = "seleccionado" if slug in selected_set else "frecuente"
+            lines.append(f"{idx}. {slug_to_name.get(slug, slug)} — {source}")
         return "\n".join(lines)
 
     def sync_selected(
@@ -185,9 +188,9 @@ def build_interface(heroes_path: Path = Path("data/heroes.json")) -> gr.Blocks:
         added = [slug for slug in new_slugs if slug not in previous]
         if added:
             record_played(added, DEFAULT_HISTORY_PATH)
-            status = f"Estado: guardados {len(added)} héroes nuevos en historial."
+            status = f"{len(added)} héroe(s) guardados en tu historial."
         else:
-            status = "Estado: selección actualizada."
+            status = "Selección actualizada."
 
         return (
             new_slugs,
@@ -215,7 +218,7 @@ def build_interface(heroes_path: Path = Path("data/heroes.json")) -> gr.Blocks:
         return (
             _history_markdown(),
             profile_input_markdown(current, include_history, history_top_n),
-            "Estado: historial RAG limpiado.",
+            "Historial borrado.",
         )
 
     def refresh_effective(
@@ -244,7 +247,8 @@ def build_interface(heroes_path: Path = Path("data/heroes.json")) -> gr.Blocks:
         history_top_n: int,
         refresh_cache: bool,
         show_context: bool,
-    ) -> tuple[str, str, str, str, str]:
+        alpha_image: float,
+    ) -> tuple[str, str, str, str, str, list]:
         """Runs recommendation flow from UI inputs and formats output panels.
 
         Args:
@@ -271,11 +275,12 @@ def build_interface(heroes_path: Path = Path("data/heroes.json")) -> gr.Blocks:
 
         if not query.strip() and not played_refs:
             return (
-                "Error: escribe una query o agrega al menos un héroe.",
+                "Selecciona al menos un héroe o describe cómo te gusta jugar.",
                 "",
                 profile_input_markdown(selected_slugs or [], include_history, history_top_n),
                 _history_markdown(),
-                "Estado: faltan datos para recomendar.",
+                "Faltan datos para recomendar.",
+                [],
             )
 
         if refresh_cache or recommender_cache is None:
@@ -293,32 +298,34 @@ def build_interface(heroes_path: Path = Path("data/heroes.json")) -> gr.Blocks:
             role_filter=role or None,
             profile_top_k=6,
             exclude_played=True,
+            alpha_image=float(alpha_image),
         )
 
+        rec_images: list[tuple[str, str]] = []
         if not result.recommendations:
-            rec_md = "### Recomendaciones\nSin resultados."
+            rec_md = "### Héroes recomendados\nNo se encontraron resultados."
         else:
-            lines = ["### Recomendaciones"]
+            lines = ["### Héroes recomendados"]
             for idx, rec in enumerate(result.recommendations, start=1):
-                lines.append(f"{idx}. {rec.name} [{rec.role}] - {rec.score}%")
+                lines.append(f"{idx}. **{rec.name}** — {rec.role} ({rec.score}% de compatibilidad)")
+                img_path = images_dir / f"{rec.slug}.png"
+                if img_path.exists():
+                    rec_images.append((str(img_path), f"{rec.name} · {rec.role} · {rec.score}%"))
             rec_md = "\n".join(lines)
 
         profile_md = ""
         if result.profile:
-            lines = [
-                "### Perfil RAG",
-                result.profile.summary,
-                f"Héroes usados: {', '.join(result.profile.played_heroes)}",
-            ]
+            lines = ["### ¿Por qué estas recomendaciones?"]
+            lines.append(f"**Basado en:** {', '.join(result.profile.played_heroes)}")
             if result.profile.dominant_roles:
-                lines.append(f"Roles dominantes: {', '.join(result.profile.dominant_roles)}")
+                lines.append(f"**Rol principal:** {', '.join(result.profile.dominant_roles)}")
             if result.profile.signature_traits:
-                lines.append(f"Rasgos: {', '.join(result.profile.signature_traits[:8])}")
+                lines.append(f"**Estilo detectado:** {', '.join(result.profile.signature_traits[:8])}")
             if show_context and result.profile.retrieved_context:
                 lines.append("")
-                lines.append("Contexto recuperado:")
+                lines.append("**Héroes similares analizados:**")
                 for i, ctx in enumerate(result.profile.retrieved_context, start=1):
-                    lines.append(f"{i}. {ctx.name} [{ctx.role}] ({ctx.score}%)")
+                    lines.append(f"{i}. {ctx.name} — {ctx.role} ({ctx.score}% similitud)")
             profile_md = "\n".join(lines)
 
         return (
@@ -326,48 +333,56 @@ def build_interface(heroes_path: Path = Path("data/heroes.json")) -> gr.Blocks:
             profile_md,
             profile_input_markdown(selected_slugs or [], include_history, history_top_n),
             _history_markdown(),
-            "Estado: recomendación completada.",
+            "¡Listo! Aquí están tus recomendaciones.",
+            rec_images,
         )
 
-    with gr.Blocks(title="OW RAG Multimodal") as demo:
-        gr.Markdown("## OW RAG Multimodal")
+    with gr.Blocks(title="Recomendador de Héroes · Overwatch") as demo:
+        gr.Markdown("## Recomendador de Héroes · Overwatch")
         gr.Markdown(
-            "Flujo: selecciona héroes, describe tu estilo y pulsa recomendar."
+            "Selecciona los héroes que ya juegas, describe cómo te gusta jugar y obtén recomendaciones personalizadas."
         )
 
         selected_state = gr.State([])
-        status_box = gr.Markdown("Estado: listo.")
+        status_box = gr.Markdown("Listo para recomendar.")
 
         hero_choice = gr.Dropdown(
             choices=hero_labels,
             multiselect=True,
             label="Héroes que ya juegas",
-            info="Se guardan automáticamente en tu historial al agregarlos por primera vez.",
+            info="Se guardan automáticamente en tu historial.",
         )
         query = gr.Textbox(
-            label="Playstyle / Query",
-            placeholder="Ejemplo: presión constante, dives rápidos y picks aislados",
+            label="¿Cómo te gusta jugar?",
+            placeholder="Ejemplo: me gustan los dives rápidos, presión constante y picks aislados",
         )
 
         run_btn = gr.Button("Recomendar", variant="primary")
 
         profile_input_box = gr.Markdown(profile_input_markdown([], True, 8))
 
-        with gr.Accordion("Ajustes avanzados", open=False):
+        with gr.Accordion("Opciones", open=False):
             with gr.Row():
-                include_history = gr.Checkbox(value=True, label="Incluir historial en RAG")
-                history_top_n = gr.Slider(1, 15, value=8, step=1, label="Top historial")
-                role = gr.Dropdown(choices=["", "Tank", "Damage", "Support"], value="", label="Rol")
-                top_k = gr.Slider(1, 10, value=5, step=1, label="Top K")
+                include_history = gr.Checkbox(value=True, label="Recordar mis héroes frecuentes")
+                history_top_n = gr.Slider(1, 15, value=8, step=1, label="Cuántos héroes frecuentes considerar")
+                role = gr.Dropdown(choices=["", "Tank", "Damage", "Support"], value="", label="Filtrar por rol")
+                top_k = gr.Slider(1, 10, value=5, step=1, label="Número de recomendaciones")
 
             with gr.Row():
-                refresh_cache = gr.Checkbox(value=False, label="Refrescar cache embeddings")
-                show_context = gr.Checkbox(value=True, label="Mostrar contexto RAG")
+                alpha_image = gr.Slider(0.0, 1.0, value=0.3, step=0.05, label="Peso del análisis visual", info="Qué tanto influyen las imágenes de los héroes en la recomendación.")
+                refresh_cache = gr.Checkbox(value=False, label="Reiniciar análisis desde cero")
+                show_context = gr.Checkbox(value=True, label="Ver detalle del análisis")
 
-            clear_history_btn = gr.Button("Limpiar historial")
+            clear_history_btn = gr.Button("Borrar historial")
             history_box = gr.Markdown(_history_markdown())
 
         rec_out = gr.Markdown()
+        rec_gallery = gr.Gallery(
+            label="Imágenes",
+            columns=5,
+            height="auto",
+            object_fit="contain",
+        )
         profile_out = gr.Markdown()
 
         hero_choice.change(
@@ -401,8 +416,9 @@ def build_interface(heroes_path: Path = Path("data/heroes.json")) -> gr.Blocks:
                 history_top_n,
                 refresh_cache,
                 show_context,
+                alpha_image,
             ],
-            outputs=[rec_out, profile_out, profile_input_box, history_box, status_box],
+            outputs=[rec_out, profile_out, profile_input_box, history_box, status_box, rec_gallery],
         )
         query.submit(
             fn=recommend_from_ui,
@@ -415,8 +431,9 @@ def build_interface(heroes_path: Path = Path("data/heroes.json")) -> gr.Blocks:
                 history_top_n,
                 refresh_cache,
                 show_context,
+                alpha_image,
             ],
-            outputs=[rec_out, profile_out, profile_input_box, history_box, status_box],
+            outputs=[rec_out, profile_out, profile_input_box, history_box, status_box, rec_gallery],
         )
 
     return demo
@@ -445,13 +462,19 @@ def main() -> int:
         default=Path("data/heroes.json"),
         help="Ruta al dataset de héroes",
     )
+    parser.add_argument(
+        "--images-dir",
+        type=Path,
+        default=Path("data/images"),
+        help="Directorio con los retratos PNG de héroes",
+    )
     args = parser.parse_args()
 
     port = _pick_available_port(args.host, args.port, args.max_port_tries)
     if port != args.port:
         print(f"Puerto {args.port} ocupado. Usando puerto {port}.")
 
-    app = build_interface(heroes_path=args.heroes_path)
+    app = build_interface(heroes_path=args.heroes_path, images_dir=args.images_dir)
     app.launch(server_name=args.host, server_port=port, share=args.share)
     return 0
 

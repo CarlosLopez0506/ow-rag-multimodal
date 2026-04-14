@@ -8,7 +8,7 @@ from collections import Counter
 import numpy as np
 
 from .data import resolve_heroes_by_ref
-from .embeddings import OpenAIEmbeddingClient, normalize_vector
+from .embeddings import OpenAIEmbeddingClient, SentenceTransformerEmbeddingClient, normalize_vector
 from .models import HeroDoc, PlayerProfile, RetrievedContext
 
 _STOPWORDS = {
@@ -52,7 +52,7 @@ class HeroRAG:
         self,
         heroes: list[HeroDoc],
         hero_vectors: np.ndarray,
-        embedding_client: OpenAIEmbeddingClient,
+        embedding_client: OpenAIEmbeddingClient | SentenceTransformerEmbeddingClient,
     ) -> None:
         """Initializes the RAG helper.
 
@@ -186,7 +186,7 @@ class HeroRAG:
         dominant = ", ".join(role for role, _ in roles.most_common(2))
         trait_text = ", ".join(traits[:5]) if traits else "adaptable"
         return (
-            f"Perfil inferido por RAG a partir de {played_names}. "
-            f"Roles dominantes: {dominant}. "
-            f"Rasgos de estilo detectados: {trait_text}."
+            f"Perfil generado a partir de {played_names}. "
+            f"Rol principal: {dominant}. "
+            f"Estilo de juego: {trait_text}."
         )
