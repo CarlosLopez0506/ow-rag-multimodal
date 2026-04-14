@@ -14,7 +14,20 @@ _CLIP_MODEL_CACHE: dict[str, Any] = {}
 
 
 def _get_or_load_clip(model_name: str) -> Any:
-    """Returns a cached SentenceTransformer CLIP model, loading it on first call."""
+    """Returns a cached SentenceTransformer CLIP model, loading it on first call.
+
+    Keeps the model in a module-level dict so subsequent calls skip the ~600 MB
+    load and return the already-initialized instance.
+
+    Args:
+        model_name: HuggingFace model identifier (e.g. ``clip-ViT-B-32``).
+
+    Returns:
+        A ``SentenceTransformer`` instance ready for encoding.
+
+    Raises:
+        RuntimeError: If ``sentence-transformers`` is not installed.
+    """
     if model_name not in _CLIP_MODEL_CACHE:
         try:
             from sentence_transformers import SentenceTransformer
